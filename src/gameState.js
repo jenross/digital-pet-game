@@ -19,10 +19,9 @@ const gameState = {
   poopTime: -1,
   timeToStartCelebrating: -1,
   timeToEndCelebrating: -1,
+  scene: 0,
   tick() {
     this.clock++;
-    console.log("clock", this.clock);
-
     if (this.clock === this.wakeTime) {
       this.wake();
     } else if (this.clock === this.sleepTime) {
@@ -37,6 +36,8 @@ const gameState = {
       this.endCelebrating();
     } else if (this.clock === this.poopTime) {
       this.poop();
+    } else if (this.clock === this.dieTime) {
+      this.die();
     }
     return this.clock;
   },
@@ -57,7 +58,7 @@ const gameState = {
     this.determineFoxState();
   },
   sleep() {
-    this.state = "SLEEP";
+    this.current = "SLEEP";
     modFox("sleep");
     modScene("night");
     this.clearTimes();
@@ -138,19 +139,17 @@ const gameState = {
     }
   },
   changeWeather() {
-    this.scene = this.scene + (1 % SCENES.length);
-    modScene(SCENES[this.scenes]);
+    this.scene = (1 + this.scene) % SCENES.length;
+    modScene(SCENES[this.scene]);
     this.determineFoxState();
   },
   cleanUpPoop() {
-    if (!this.current === "POOPING") {
-      return;
+    if (this.current === "POOPING") {
+      this.dieTime = -1;
+      togglePoopBag(true);
+      this.startCelebrating();
+      this.hungryTime = getNextHungerTime(this.clock);
     }
-
-    this.dieTime = -1;
-    togglePoopBag(true);
-    this.startCelebrating();
-    this.hungryTime = getNextHungerTime(this.clock);
   },
   feed() {
     if (this.current !== "HUNGRY") {
