@@ -1,0 +1,20 @@
+{
+  "name": "digital-pet-game",
+  "version": "1.0.0",
+  "description": "A JavaScript digital pet game pair programmed with Brian Holt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenross/digital-pet-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jenross/digital-pet-game/issues"
+  },
+  "homepage": "https://github.com/jenross/digital-pet-game#readme"
+}
